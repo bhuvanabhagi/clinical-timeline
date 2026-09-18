@@ -9,10 +9,6 @@ nlp = spacy.load("en_core_web_sm")
 notes = pd.read_csv("data/synthetic_clinical_notes.csv")
 
 
-# -----------------------------
-# Clinical entity normalization
-# -----------------------------
-
 def normalize_entity(text, spacy_label):
 
     text_lower = text.lower().strip()
@@ -53,11 +49,11 @@ def normalize_entity(text, spacy_label):
     if spacy_label == "DATE":
         return "Date"
 
-    # Person
+    # People
     if spacy_label == "PERSON":
         return "Person"
 
-    # Location
+    # Locations
     if spacy_label in ["GPE", "LOC", "FAC"]:
         return "Location"
 
@@ -66,14 +62,10 @@ def normalize_entity(text, spacy_label):
         if any(char.isdigit() for char in text):
             return "Identifier"
 
-    # Keep original spaCy category if nothing matched
     return spacy_label
 
 
-# -----------------------------
-# Extract and normalize
-# -----------------------------
-
+# Extract entities from one note
 def extract_normalized_entities(text):
 
     doc = nlp(str(text))
@@ -96,40 +88,53 @@ def extract_normalized_entities(text):
     return entities
 
 
-# -----------------------------
-# Test on first 10 notes
-# -----------------------------
+# --------------------------------
+# Process ALL 1602 clinical notes
+# --------------------------------
 
-print("TOTAL NOTES:", len(notes))
-print("=" * 80)
+all_entities = []
 
-total_entities = 0
-
-for index, note in notes.iterrows():
+for _, note in notes.iterrows():
 
     entities = extract_normalized_entities(
         note["clean_note_text"]
     )
 
-    total_entities += len(entities)
+    for entity in entities:
 
-    if index < 10:
-
-        print("\nNOTE:", index + 1)
-
-        print("ENTITIES:")
-
-        for entity in entities:
-
-            print(
-                "  -",
-                entity["text"],
-                "| spaCy:",
-                entity["original_label"],
-                "| Clinical:",
-                entity["clinical_category"]
-            )
+        all_entities.append({
+            "note_id": note["clinical_note_id"],
+            "admission_id": note["admission_id"],
+            "date": note["creation_timestamp"],
+            "entity": entity["text"],
+            "spacy_label": entity["original_label"],
+            "clinical_category": entity["clinical_category"]
+        })
 
 
-print("\n" + "=" * 80)
-print("TOTAL ENTITIES:", total_entities)
+# Convert to DataFrame
+entities_df = pd.DataFrame(all_entities)
+
+
+# Save results
+entities_df.to_csv(
+    "data/extracted_entities.csv",
+    index=False
+)
+
+
+print("=" * 70)
+print("ENTITY EXTRACTION COMPLETE")
+print("=" * 70)
+
+print("Notes processed:", len(notes))
+print("Entities extracted:", len(entities_df))
+
+print("\nSaved file:")
+print("data/extracted_entities.csv")
+
+print("\nEntity categories:")
+print(
+    entities_df["clinical_category"]
+    .value_counts()
+)
