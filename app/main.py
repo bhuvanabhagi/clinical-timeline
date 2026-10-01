@@ -4,9 +4,6 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException
 
 
-# ============================================================
-# PROJECT PATHS
-# ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -15,9 +12,6 @@ DATA_DIR = PROJECT_ROOT / "data" / "processed"
 TIMELINE_PATH = DATA_DIR / "patient_timelines.csv"
 
 
-# ============================================================
-# FASTAPI APP
-# ============================================================
 
 app = FastAPI(
     title="Clinical Timeline API",
@@ -26,9 +20,6 @@ app = FastAPI(
 )
 
 
-# ============================================================
-# LOAD TIMELINE DATA
-# ============================================================
 
 def load_timelines():
     """Load patient timeline data from CSV."""
@@ -50,9 +41,6 @@ def load_timelines():
     return df
 
 
-# ============================================================
-# ROOT ENDPOINT
-# ============================================================
 
 @app.get("/")
 def root():
@@ -63,9 +51,6 @@ def root():
     }
 
 
-# ============================================================
-# HEALTH CHECK
-# ============================================================
 
 @app.get("/health")
 def health_check():
@@ -86,9 +71,6 @@ def health_check():
         )
 
 
-# ============================================================
-# GET PATIENT TIMELINE
-# ============================================================
 
 @app.get("/patient/{patient_id}/timeline")
 def get_patient_timeline(patient_id: str):
@@ -144,10 +126,6 @@ def get_patient_timeline(patient_id: str):
         )
 
 
-# ============================================================
-# GET PATIENTS
-# ============================================================
-
 @app.get("/patients")
 def get_patients():
 
@@ -174,9 +152,6 @@ def get_patients():
         )
 
 
-# ============================================================
-# GET EVENTS BY TYPE
-# ============================================================
 
 @app.get("/patient/{patient_id}/events/{event_type}")
 def get_patient_events(
@@ -237,9 +212,6 @@ def get_patient_events(
         )
 
 
-# ============================================================
-# RUN DIRECTLY
-# ============================================================
 
 if __name__ == "__main__":
 
