@@ -1,125 +1,216 @@
+from pathlib import Path
 import pandas as pd
 import re
 
-# Load data
-patients = pd.read_csv("data/patients.csv")
-admissions = pd.read_csv("data/admissions.csv")
-notes = pd.read_csv("data/synthetic_clinical_notes.csv")
+
+# ---------------------------------------------------------
+# PROJECT PATHS
+# ---------------------------------------------------------
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+INPUT_PATH = (
+    PROJECT_ROOT
+    / "data"
+    / "processed"
+    / "processed_clinical_notes.csv"
+)
+
+OUTPUT_PATH = (
+    PROJECT_ROOT
+    / "data"
+    / "processed"
+    / "clinical_events.csv"
+)
 
 
-def build_case(person_id):
+# ---------------------------------------------------------
+# EVENT KEYWORDS
+# ---------------------------------------------------------
 
-    # Find patient's admission
-    patient_admissions = admissions[
-        admissions["patient_id"] == person_id
-    ]
+EVENT_PATTERNS = {
+    "Symptom": [
+        "headache",
+        "pain",
+        "nausea",
+        "vomiting",
+        "fever",
+        "dizziness",
+        "weakness",
+        "shortness of breath",
+    ],
 
-    admission_ids = patient_admissions["admission_id"].tolist()
+    "Investigation": [
+        "ct scan",
+        "ct head",
+        "mri",
+        "mra",
+        "x-ray",
+        "blood test",
+        "blood tests",
+        "fbc",
+        "renal panel",
+        "lft",
+        "investigation",
+        "scan",
+    ],
 
-    # Find notes belonging to this case
-    case_notes = notes[
-        notes["admission_id"].isin(admission_ids)
-    ].copy()
+    "Diagnosis": [
+        "diagnosis",
+        "diagnosed",
+        "impression",
+        "rcvs",
+        "infection",
+        "pneumonia",
+        "stroke",
+    ],
 
-    # Convert dates
-    case_notes["creation_timestamp"] = pd.to_datetime(
-        case_notes["creation_timestamp"],
-        dayfirst=True,
-        errors="coerce"
-    )
+    "Treatment": [
+        "started",
+        "start",
+        "treatment",
+        "medication",
+        "prescribed",
+        "nimodipine",
+        "paracetamol",
+        "antibiotic",
+    ],
 
-    # Sort by date
-    case_notes = case_notes.sort_values("creation_timestamp")
+    "Monitoring": [
+        "monitor",
+        "monitoring",
+        "observed",
+        "observation",
+        "bp monitoring",
+        "follow-up monitoring",
+    ],
 
-    return case_notes
+    "Discharge": [
+        "discharge",
+        "discharged",
+        "discharge planning",
+    ],
+
+    "Follow-up": [
+        "follow-up",
+        "follow up",
+        "gp follow-up",
+        "review",
+    ],
+}
 
 
-def extract_events(note_text):
+# ---------------------------------------------------------
+# FIND EVENT TYPE
+# ---------------------------------------------------------
+
+def detect_event_type(text):
+    """
+    Identify the first matching clinical event category.
+    """
+
+    text_lower = text.lower()
+
+    for event_type, keywords in EVENT_PATTERNS.items():
+
+        for keyword in keywords:
+
+            if keyword in text_lower:
+                return event_type
+
+    return "Other"
+
+
+# ---------------------------------------------------------
+# EXTRACT EVIDENCE
+# ---------------------------------------------------------
+
+def extract_evidence(text, event_type):
+    """
+    Return a sentence containing evidence for the event.
+    """
+
+    sentences = re.split(r"(?<=[.!?])\s+", text)
+
+    keywords = EVENT_PATTERNS.get(event_type, [])
+
+    for sentence in sentences:
+
+        sentence_lower = sentence.lower()
+
+        for keyword in keywords:
+
+            if keyword in sentence_lower:
+                return sentence.strip()
+
+    return text[:300].strip()
+
+
+# ---------------------------------------------------------
+# MAIN EVENT EXTRACTION
+# ---------------------------------------------------------
+
+def extract_events():
+
+    print("Loading processed clinical notes...")
+
+    notes = pd.read_csv(INPUT_PATH)
+
+    print("Total notes:", len(notes))
 
     events = []
 
-    text = str(note_text)
+    for _, row in notes.iterrows():
 
-    # Event 1: Headache / symptom
-    if re.search(r"headache", text, re.IGNORECASE):
-        events.append({
-            "event_type": "Symptom",
-            "event": "Headache",
-            "evidence": "headache"
-        })
+        text = str(row["clean_note_text"])
 
-    # Event 2: CT scan
-    if re.search(r"\bCT\b|CT scan|CT head", text, re.IGNORECASE):
-        events.append({
-            "event_type": "Investigation",
-            "event": "CT scan",
-            "evidence": "CT"
-        })
+        event_type = detect_event_type(text)
 
-    # Event 3: MRI/MRA
-    if re.search(r"MRI|MRA", text, re.IGNORECASE):
-        events.append({
-            "event_type": "Investigation",
-            "event": "MRI/MRA",
-            "evidence": "MRI/MRA"
-        })
+        evidence = extract_evidence(
+            text,
+            event_type
+        )
 
-    # Event 4: Diagnosis
-    if re.search(r"RCVS", text, re.IGNORECASE):
-        events.append({
-            "event_type": "Diagnosis",
-            "event": "RCVS",
-            "evidence": "RCVS"
-        })
+        event = {
+            "person_id": row["person_id"],
+            "admission_id": row["admission_id"],
+            "clinical_note_id": row["clinical_note_id"],
+            "event_date": row["creation_timestamp"],
+            "event_type": event_type,
+            "event_text": evidence,
+            "note_subject": row["note_subject"],
+            "note_type": row["note_type"],
+        }
 
-    # Event 5: Medication
-    if re.search(r"nimodipine", text, re.IGNORECASE):
-        events.append({
-            "event_type": "Treatment",
-            "event": "Nimodipine",
-            "evidence": "nimodipine"
-        })
+        events.append(event)
 
-    # Event 6: Discharge
-    if re.search(r"discharge|discharged", text, re.IGNORECASE):
-        events.append({
-            "event_type": "Disposition",
-            "event": "Discharge",
-            "evidence": "discharge"
-        })
+    events_df = pd.DataFrame(events)
 
-    return events
+    events_df.to_csv(
+        OUTPUT_PATH,
+        index=False
+    )
+
+    print()
+    print("========================================")
+    print("EVENT EXTRACTION COMPLETED")
+    print("========================================")
+
+    print("Total events:", len(events_df))
+
+    print()
+    print("Event type distribution:")
+
+    print(
+        events_df["event_type"]
+        .value_counts()
+    )
+
+    print()
+    print("Saved to:")
+
+    print(OUTPUT_PATH)
 
 
-# ---------------------------------------
-# TEST EVENT EXTRACTION
-# ---------------------------------------
-
-person_id = patients.iloc[0]["person_id"]
-
-case_notes = build_case(person_id)
-
-print("CASE ID:", person_id)
-print("=" * 80)
-
-for _, note in case_notes.iterrows():
-
-    events = extract_events(note["clean_note_text"])
-
-    print("\nDATE:", note["creation_timestamp"])
-    print("NOTE TYPE:", note["note_type"])
-
-    if events:
-
-        print("EVENTS:")
-
-        for event in events:
-            print(
-                "  -",
-                event["event_type"],
-                ":",
-                event["event"]
-            )
-
-    else:
-        print("EVENTS: None")
+if __name__ == "__main__":
+    extract_events()

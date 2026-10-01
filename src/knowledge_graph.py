@@ -1,130 +1,176 @@
-import networkx as nx
+from pathlib import Path
 import pandas as pd
 
-# Load data
-patients = pd.read_csv("data/patients.csv")
-admissions = pd.read_csv("data/admissions.csv")
-notes = pd.read_csv("data/synthetic_clinical_notes.csv")
+#paths
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
+
+INPUT_PATH = PROCESSED_DIR / "temporal_events.csv"
+
+OUTPUT_PATH = PROCESSED_DIR / "knowledge_graph.csv"
 
 
-def build_case(person_id):
 
-    patient_admissions = admissions[
-        admissions["patient_id"] == person_id
-    ]
+def load_events():
 
-    admission_ids = patient_admissions["admission_id"].tolist()
+    print("Loading temporal events...")
 
-    case_notes = notes[
-        notes["admission_id"].isin(admission_ids)
-    ].copy()
+    events = pd.read_csv(INPUT_PATH)
 
-    case_notes["creation_timestamp"] = pd.to_datetime(
-        case_notes["creation_timestamp"],
-        dayfirst=True,
-        errors="coerce"
+    print(f"Total events loaded: {len(events)}")
+
+    return events
+
+
+
+
+def build_knowledge_graph():
+
+    events = load_events()
+
+    print("\nEvent columns:")
+    print(events.columns.tolist())
+
+
+
+    graph_records = []
+
+    for _, row in events.iterrows():
+
+        person_id = row.get("person_id")
+
+        event_type = row.get("event_type")
+
+        event_text = row.get("event_text")
+
+        event_timestamp = row.get("event_timestamp")
+
+        event_order = row.get("event_order")
+
+        clinical_note_id = row.get("clinical_note_id")
+
+        admission_id = row.get("admission_id")
+
+
+        # Skip events without a patient
+        if pd.isna(person_id):
+            continue
+
+        
+
+        if event_type == "Symptom":
+
+            relationship = "EXPERIENCED"
+
+        elif event_type == "Investigation":
+
+            relationship = "UNDERWENT"
+
+        elif event_type == "Diagnosis":
+
+            relationship = "DIAGNOSED_WITH"
+
+        elif event_type == "Treatment":
+
+            relationship = "TREATED_WITH"
+
+        elif event_type == "Monitoring":
+
+            relationship = "MONITORED_BY"
+
+        elif event_type == "Discharge":
+
+            relationship = "DISCHARGED_AFTER"
+
+        elif event_type == "Follow-up":
+
+            relationship = "FOLLOWED_UP"
+
+        else:
+
+            relationship = "RELATED_TO"
+
+
+ 
+
+        graph_records.append({
+
+            "patient_id": person_id,
+
+            "relationship": relationship,
+
+            "event_type": event_type,
+
+            "event": event_text,
+
+            "event_timestamp": event_timestamp,
+
+            "event_order": event_order,
+
+            "clinical_note_id": clinical_note_id,
+
+            "admission_id": admission_id
+
+        })
+
+
+
+
+    graph = pd.DataFrame(graph_records)
+
+
+
+
+    graph.to_csv(
+        OUTPUT_PATH,
+        index=False
     )
 
-    return case_notes.sort_values("creation_timestamp")
 
 
-def build_knowledge_graph(case_notes):
 
-    graph = nx.DiGraph()
+    print("\n========================================")
+    print("KNOWLEDGE GRAPH DATA CREATED")
+    print("========================================")
 
-    for _, note in case_notes.iterrows():
-
-        text = str(note["clean_note_text"])
-        date = note["creation_timestamp"]
-        source = note["clinical_note_id"]
-
-        # Add entities when they appear together
-        if "headache" in text.lower() and "RCVS" in text:
-
-            graph.add_node("Headache", type="Symptom")
-            graph.add_node("RCVS", type="Diagnosis")
-
-            graph.add_edge(
-                "Headache",
-                "RCVS",
-                relationship="associated_with",
-                date=str(date),
-                source=source
-            )
-
-        if "MRI" in text or "MRA" in text:
-
-            graph.add_node("MRI/MRA", type="Investigation")
-            graph.add_node("RCVS", type="Diagnosis")
-
-            graph.add_edge(
-                "MRI/MRA",
-                "RCVS",
-                relationship="investigated",
-                date=str(date),
-                source=source
-            )
-
-        if "nimodipine" in text.lower():
-
-            graph.add_node("Nimodipine", type="Medication")
-            graph.add_node("RCVS", type="Diagnosis")
-
-            graph.add_edge(
-                "Nimodipine",
-                "RCVS",
-                relationship="treatment_for",
-                date=str(date),
-                source=source
-            )
-
-    return graph
-
-
-# ---------------------------------------
-# TEST
-# ---------------------------------------
-
-person_id = patients.iloc[0]["person_id"]
-
-case_notes = build_case(person_id)
-
-graph = build_knowledge_graph(case_notes)
-
-print("KNOWLEDGE GRAPH")
-print("=" * 80)
-
-print("\nENTITIES:")
-
-for node, data in graph.nodes(data=True):
+    print(f"Graph relationships: {len(graph)}")
 
     print(
-        "-",
-        node,
-        "| Type:",
-        data["type"]
+        f"Patients represented: "
+        f"{graph['patient_id'].nunique()}"
     )
 
-
-print("\nRELATIONSHIPS:")
-
-for source, target, data in graph.edges(data=True):
+    print("\nRelationship distribution:")
 
     print(
-        "-",
-        source,
-        "→",
-        data["relationship"],
-        "→",
-        target
+        graph["relationship"]
+        .value_counts()
     )
 
-    print(
-        "  Date:",
-        data["date"]
-    )
+
+    print("\nSample graph relationships:")
 
     print(
-        "  Source:",
-        data["source"]
+        graph[
+            [
+                "patient_id",
+                "relationship",
+                "event_type",
+                "event_timestamp",
+                "event"
+            ]
+        ]
+        .head(10)
+        .to_string(index=False)
     )
+
+
+    print("\nSaved to:")
+    print(OUTPUT_PATH)
+
+
+
+if __name__ == "__main__":
+
+    build_knowledge_graph()

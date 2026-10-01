@@ -1,61 +1,108 @@
+from pathlib import Path
 import pandas as pd
 
-patients = pd.read_csv("data/patients.csv")
-admissions = pd.read_csv("data/admissions.csv")
-notes = pd.read_csv("data/synthetic_clinical_notes.csv")
+
+# ============================================================
+# PROJECT PATH
+# ============================================================
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
+
+TEMPORAL_EVENTS_PATH = PROCESSED_DIR / "temporal_events.csv"
+OUTPUT_PATH = PROCESSED_DIR / "patient_timelines.csv"
 
 
-def build_timeline(person_id):
+# ============================================================
+# BUILD PATIENT TIMELINES
+# ============================================================
 
-    # Find patient's admissions
-    patient_admissions = admissions[
-        admissions["patient_id"] == person_id
-    ]
+def build_patient_timelines():
 
-    admission_ids = patient_admissions["admission_id"].tolist()
+    print("Loading temporal events...")
 
-    # Get all notes for this case
-    case_notes = notes[
-        notes["admission_id"].isin(admission_ids)
-    ].copy()
+    events = pd.read_csv(TEMPORAL_EVENTS_PATH)
 
-    # Convert dates
-    case_notes["creation_timestamp"] = pd.to_datetime(
-        case_notes["creation_timestamp"],
-        dayfirst=True
+    print(f"Events loaded: {len(events)}")
+
+    # Convert timestamp
+    events["event_timestamp"] = pd.to_datetime(
+        events["event_timestamp"],
+        errors="coerce"
     )
 
-    # Sort chronologically
-    case_notes = case_notes.sort_values("creation_timestamp")
+    # Sort chronologically for each patient
+    events = events.sort_values(
+        by=["person_id", "event_timestamp"],
+        ascending=True
+    ).reset_index(drop=True)
 
-    # Create timeline
-    timeline = []
+    # Create event order for each patient
+    events["event_order"] = (
+        events.groupby("person_id").cumcount() + 1
+    )
 
-    for _, note in case_notes.iterrows():
+    # Create a readable timeline description
+    events["timeline_entry"] = (
+        events["event_timestamp"].astype(str)
+        + " | "
+        + events["event_type"].fillna("Unknown")
+        + " | "
+        + events["event_text"].fillna("")
+    )
 
-        event = {
-            "date": note["creation_timestamp"],
-            "note_type": note["note_type"],
-            "subject": note["note_subject"],
-            "text": note["clean_note_text"]
-        }
+    # Select useful columns
+    timeline = events[
+        [
+            "person_id",
+            "admission_id",
+            "clinical_note_id",
+            "event_order",
+            "event_timestamp",
+            "event_type",
+            "event_text",
+            "timeline_entry"
+        ]
+    ]
 
-        timeline.append(event)
+    # Save
+    timeline.to_csv(
+        OUTPUT_PATH,
+        index=False
+    )
 
-    return timeline
+    print("\n========================================")
+    print("PATIENT TIMELINE BUILD COMPLETED")
+    print("========================================")
+
+    print(f"Total timeline events: {len(timeline)}")
+    print(f"Patients represented: {timeline['person_id'].nunique()}")
+
+    print("\nSample patient timeline:")
+
+    first_patient = timeline["person_id"].dropna().iloc[0]
+
+    sample = timeline[
+        timeline["person_id"] == first_patient
+    ][
+        [
+            "event_order",
+            "event_timestamp",
+            "event_type",
+            "event_text"
+        ]
+    ].head(10)
+
+    print(sample.to_string(index=False))
+
+    print("\nSaved to:")
+    print(OUTPUT_PATH)
 
 
-# Test with first patient
-person_id = patients.iloc[0]["person_id"]
+# ============================================================
+# MAIN
+# ============================================================
 
-timeline = build_timeline(person_id)
-
-print("CASE TIMELINE")
-print("=" * 70)
-
-for event in timeline:
-
-    print("\nDATE:", event["date"])
-    print("TYPE:", event["note_type"])
-    print("SUBJECT:", event["subject"])
-    print("-" * 70)
+if __name__ == "__main__":
+    build_patient_timelines()
