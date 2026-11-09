@@ -2,9 +2,6 @@ from pathlib import Path
 import pandas as pd
 
 
-# ============================================================
-# PROJECT PATH
-# ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -14,9 +11,6 @@ TEMPORAL_EVENTS_PATH = PROCESSED_DIR / "temporal_events.csv"
 OUTPUT_PATH = PROCESSED_DIR / "patient_timelines.csv"
 
 
-# ============================================================
-# BUILD PATIENT TIMELINES
-# ============================================================
 
 def build_patient_timelines():
 
@@ -100,9 +94,6 @@ def build_patient_timelines():
     print(OUTPUT_PATH)
 
 
-# ============================================================
-# MAIN
-# ============================================================
 
 if __name__ == "__main__":
     build_patient_timelines()

@@ -1,0 +1,662 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2026-10-30">
+    <creator>NetworkX 3.7</creator>
+  </meta>
+  <graph defaultedgetype="directed" mode="static" name="">
+    <attributes mode="static" class="edge">
+      <attribute id="7" title="relationship" type="string" />
+      <attribute id="8" title="event_date" type="string" />
+      <attribute id="9" title="networkx_key" type="long" />
+      <attribute id="10" title="assertion" type="string" />
+      <attribute id="11" title="clinical_note_id" type="string" />
+    </attributes>
+    <attributes mode="static" class="node">
+      <attribute id="0" title="node_type" type="string" />
+      <attribute id="1" title="event_type" type="string" />
+      <attribute id="2" title="event_date" type="string" />
+      <attribute id="3" title="evidence" type="string" />
+      <attribute id="4" title="assertion" type="string" />
+      <attribute id="5" title="clinical_note_id" type="string" />
+      <attribute id="6" title="admission_id" type="string" />
+    </attributes>
+    <nodes>
+      <node id="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" label="Patient:028998ee-babc-4096-9b28-001bc2f9a84e">
+        <attvalues>
+          <attvalue for="0" value="Patient" />
+        </attvalues>
+      </node>
+      <node id="EventNode:1dc36480-1654-4efd-bbdb-466761571fbf" label="Symptom | 2026-01-07 08:45:00 | - Patient: Tomos Ellis, 15-year-old male, presented via A&amp;E on...">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Symptom" />
+          <attvalue for="2" value="2026-01-07 08:45:00" />
+          <attvalue for="3" value="- Patient: Tomos Ellis, 15-year-old male, presented via A&amp;E on 07/01/26 at 08:45 with severe abdominal pain over the past 3 days." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="1dc36480-1654-4efd-bbdb-466761571fbf" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:57336364-5e89-4ef2-ac72-ec1fef1c23c2" label="Symptom | 2026-01-07 09:10:00 | Patient: Tomos Ellis, 15-year-old male, presenting with abdomi...">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Symptom" />
+          <attvalue for="2" value="2026-01-07 09:10:00" />
+          <attvalue for="3" value="Patient: Tomos Ellis, 15-year-old male, presenting with abdominal pain." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="57336364-5e89-4ef2-ac72-ec1fef1c23c2" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:7201c67a-de62-43f3-9f27-b628686f1f4f" label="Symptom | 2026-01-07 09:25:00 | Chief complaint: Abdominal pain, ongoing for 3 days.">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Symptom" />
+          <attvalue for="2" value="2026-01-07 09:25:00" />
+          <attvalue for="3" value="Chief complaint: Abdominal pain, ongoing for 3 days." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="7201c67a-de62-43f3-9f27-b628686f1f4f" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:87d658f4-d59d-4747-b655-2f90228ec92c" label="Investigation | 2026-01-07 10:00:00 | Reviewed abdominal X-ray on 2026-01-07, which confirmed signif...">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Investigation" />
+          <attvalue for="2" value="2026-01-07 10:00:00" />
+          <attvalue for="3" value="Reviewed abdominal X-ray on 2026-01-07, which confirmed significant faecal loading." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="87d658f4-d59d-4747-b655-2f90228ec92c" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:517c676b-9d05-4343-b32e-501911137809" label="Symptom | 2026-01-07 10:30:00 | Aya Kobayashi  Presenting Complaint Abdominal pain  History of...">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Symptom" />
+          <attvalue for="2" value="2026-01-07 10:30:00" />
+          <attvalue for="3" value="Aya Kobayashi&#10;&#10;Presenting Complaint&#10;Abdominal pain&#10;&#10;History of Presenting Complaint&#10;3-day hx of abdominal pain and constipation." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="517c676b-9d05-4343-b32e-501911137809" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" label="Symptom | 2026-01-07 11:00:00 | Yuri Matsumoto (FY1)  Presenting Complaint 3-day hx of abdomin...">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Symptom" />
+          <attvalue for="2" value="2026-01-07 11:00:00" />
+          <attvalue for="3" value="Yuri Matsumoto (FY1)&#10;&#10;Presenting Complaint&#10;3-day hx of abdominal pain - 3-day hx of worsening adominal pain - Site: Lower abdmoen - Onset: Gradual - Character: Dull ache - Radiates: No radiartion - Associations: Constipation, reduced appetite - Timing: Constant - Exacerbating factors: Eating - Severity: 6/10 on arrival, reduced to 5/10 after IV fluids (0.9% sodium chloride) in ED - Note: Single dose of 10mg bisacodyl administered in ED&#10;&#10;Review of Systems&#10;- Cardiovascular: No chest pain, palpitations, or dizziness&#10;- Respiratory: No SOB or cough&#10;- Gastrointestinal: Abdominal pain as described, constipation, no nausea or vomiting, no melaena, no haematochezia&#10;- Genitourinary: No dysuria or haematuria&#10;- Neurological: No headaches, weakness, or altered coonsciousjess&#10;- Musculoskeletal: No joint or muscle pain&#10;- ENT: No sore throat or ear pain&#10;- Dermatological: No rashes or skin changes&#10;&#10;Past Medical History&#10;- Nil&#10;&#10;Medications&#10;- None&#10;&#10;Allergies&#10;No known drug allergies&#10;&#10;Social History&#10;- Lives with parents&#10;- Attends schol full-time&#10;- Independent in activities of daily living&#10;- No history of smoking, alcohol, or recreational drug use&#10;&#10;Family History&#10;No known familial history of gastrointestinal ior other relevant conditions&#10;&#10;On Examination&#10;- Alert, sitting comfortably, no acute distress&#10;- Abdominal examination:&#10;  - Inspection: Abdomen distenedd, no visible scars or masses&#10;  - Palpation: Mild tenderness in bilateral lower quad rants (BLQ), no guarding or rebound tenderness&#10;  - Percussion: Tympanic over large bowel&#10;  - Auscultation: Normakl bowel sounds (NBS)&#10;- Hydration assessment:&#10;  - Mildly dry mucous membranes (MM)&#10;  - Skin turgor slightly reduced&#10;- No other significant findings on systemic examination&#10;&#10;Observations&#10;HR 92&#10;BP 110/72&#10;RR 16&#10;Temp 36.8&#10;SpO2 99%&#10;&#10;Investigations&#10;- Abdominal X-ray: Significant faecal loaading noted, no evidence of obstruction or perforation&#10;- Blood tests: Normal FBC, U&amp;Es, and CRP&#10;- No other test results pending&#10;&#10;Impression&#10;Constipation with associated abdominal pain and mild dehydration&#10;&#10;Plan&#10;- Prescribe oral macrogol 13.8g sachets, 1 sachet TID as per ED recommendation&#10;- Encourage oral fluid intake to address dehydration&#10;- Monitor bowel movements andabdominal symptoms&#10;- Reassess hydration status and abdominal symptoms after 24 hours&#10;- If no significant improvement in symptoms after 24 hours, consider aditional imaging or alternative laxatives&#10;&#10;&#10;Dr." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:aeeb1efb-3893-4746-a192-014babe7179d" label="Symptom | 2026-01-07 13:00:00 | Denis Jonathan Sullivan (SpR)  Presenting Complaint Abdominal ...">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Symptom" />
+          <attvalue for="2" value="2026-01-07 13:00:00" />
+          <attvalue for="3" value="Denis Jonathan Sullivan (SpR)&#10;&#10;Presenting Complaint&#10;Abdominal pain Hx noted thank you&#10;&#10;Issues&#10;1." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="aeeb1efb-3893-4746-a192-014babe7179d" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:963c787f-2892-4e92-b75d-d5ad7ccbc3b1" label="Follow-up | 2026-01-07 15:30:00 | Follow-up session scheduled for 08/01/26 to assess progress.">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Follow-up" />
+          <attvalue for="2" value="2026-01-07 15:30:00" />
+          <attvalue for="3" value="Follow-up session scheduled for 08/01/26 to assess progress." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="963c787f-2892-4e92-b75d-d5ad7ccbc3b1" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:16630a4e-c416-40a0-a65b-c66085aadc49" label="Treatment | 2026-01-07 16:00:00 | - No changes to existing treatment plan made at this time.">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Treatment" />
+          <attvalue for="2" value="2026-01-07 16:00:00" />
+          <attvalue for="3" value="- No changes to existing treatment plan made at this time." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="16630a4e-c416-40a0-a65b-c66085aadc49" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:dd475629-dee3-466d-8f89-b30e85747025" label="Symptom | 2026-01-08 09:00:00 | Denis Jonathan Sullivan (SpR)  Presenting Complaint Abdominal ...">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Symptom" />
+          <attvalue for="2" value="2026-01-08 09:00:00" />
+          <attvalue for="3" value="Denis Jonathan Sullivan (SpR)&#10;&#10;Presenting Complaint&#10;Abdominal pain&#10;&#10;Issues&#10;1." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="dd475629-dee3-466d-8f89-b30e85747025" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:9f04d5e6-5b49-49ae-a2da-b1c27cfe8d60" label="Treatment | 2026-01-08 10:30:00 | No new meds prescribed during this session.">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Treatment" />
+          <attvalue for="2" value="2026-01-08 10:30:00" />
+          <attvalue for="3" value="No new meds prescribed during this session." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="9f04d5e6-5b49-49ae-a2da-b1c27cfe8d60" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:ba748d7d-fa5a-43f9-88d0-d923f650dcea" label="Treatment | 2026-01-08 11:15:00 | No changes to medications.">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Treatment" />
+          <attvalue for="2" value="2026-01-08 11:15:00" />
+          <attvalue for="3" value="No changes to medications." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="ba748d7d-fa5a-43f9-88d0-d923f650dcea" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:22a8e288-869a-4587-82b5-11e4a553e386" label="Monitoring | 2026-01-08 14:00:00 | No adverse events observed.">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Monitoring" />
+          <attvalue for="2" value="2026-01-08 14:00:00" />
+          <attvalue for="3" value="No adverse events observed." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="22a8e288-869a-4587-82b5-11e4a553e386" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:421245a4-ff53-4b92-84a6-dcb33e8c0e4a" label="Symptom | 2026-01-09 08:30:00 | Denis Jonathan Sullivan (SpR)  Presenting Complaint Abdominal ...">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Symptom" />
+          <attvalue for="2" value="2026-01-09 08:30:00" />
+          <attvalue for="3" value="Denis Jonathan Sullivan (SpR)&#10;&#10;Presenting Complaint&#10;Abdominal pain&#10;&#10;Issues&#10;1." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="421245a4-ff53-4b92-84a6-dcb33e8c0e4a" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="EventNode:9409c381-f184-4c83-98ad-3bcfb9ac95cd" label="Discharge | 2026-01-09 09:30:00 | - GP informed of patient's discharge and provided details of h...">
+        <attvalues>
+          <attvalue for="0" value="Clinical Event" />
+          <attvalue for="1" value="Discharge" />
+          <attvalue for="2" value="2026-01-09 09:30:00" />
+          <attvalue for="3" value="- GP informed of patient's discharge and provided details of hospital management." />
+          <attvalue for="4" value="RECORDED" />
+          <attvalue for="5" value="9409c381-f184-4c83-98ad-3bcfb9ac95cd" />
+          <attvalue for="6" value="88ed813c-7ca9-4fac-b57d-c2005a4bb8ba" />
+        </attvalues>
+      </node>
+      <node id="SYMPTOM:pain" label="SYMPTOM:pain" />
+      <node id="PROCEDURE_TEST:x-ray" label="PROCEDURE_TEST:x-ray" />
+      <node id="SYMPTOM:headache" label="SYMPTOM:headache" />
+      <node id="SYMPTOM:nausea" label="SYMPTOM:nausea" />
+      <node id="SYMPTOM:vomiting" label="SYMPTOM:vomiting" />
+      <node id="SYMPTOM:dizziness" label="SYMPTOM:dizziness" />
+      <node id="SYMPTOM:weakness" label="SYMPTOM:weakness" />
+      <node id="MEDICATION:medication" label="MEDICATION:medication" />
+      <node id="PROCEDURE_TEST:blood test" label="PROCEDURE_TEST:blood test" />
+      <node id="PROCEDURE_TEST:blood tests" label="PROCEDURE_TEST:blood tests" />
+      <node id="PROCEDURE_TEST:fbc" label="PROCEDURE_TEST:fbc" />
+      <node id="BODY_PART:head" label="BODY_PART:head" />
+      <node id="BODY_PART:chest" label="BODY_PART:chest" />
+      <node id="BODY_PART:abdomen" label="BODY_PART:abdomen" />
+    </nodes>
+    <edges>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:1dc36480-1654-4efd-bbdb-466761571fbf" id="0" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-07 08:45:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:57336364-5e89-4ef2-ac72-ec1fef1c23c2" id="1" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-07 09:10:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:7201c67a-de62-43f3-9f27-b628686f1f4f" id="2" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-07 09:25:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:87d658f4-d59d-4747-b655-2f90228ec92c" id="3" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-07 10:00:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:517c676b-9d05-4343-b32e-501911137809" id="4" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-07 10:30:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" id="5" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:aeeb1efb-3893-4746-a192-014babe7179d" id="6" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-07 13:00:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:963c787f-2892-4e92-b75d-d5ad7ccbc3b1" id="7" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-07 15:30:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:16630a4e-c416-40a0-a65b-c66085aadc49" id="8" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-07 16:00:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:dd475629-dee3-466d-8f89-b30e85747025" id="9" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-08 09:00:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:9f04d5e6-5b49-49ae-a2da-b1c27cfe8d60" id="10" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-08 10:30:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:ba748d7d-fa5a-43f9-88d0-d923f650dcea" id="11" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-08 11:15:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:22a8e288-869a-4587-82b5-11e4a553e386" id="12" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-08 14:00:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:421245a4-ff53-4b92-84a6-dcb33e8c0e4a" id="13" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-09 08:30:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="EventNode:9409c381-f184-4c83-98ad-3bcfb9ac95cd" id="14" label="HAS_CLINICAL_EVENT">
+        <attvalues>
+          <attvalue for="7" value="HAS_CLINICAL_EVENT" />
+          <attvalue for="8" value="2026-01-09 09:30:00" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:pain" id="15" label="HAS_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="HAS_SYMPTOM" />
+          <attvalue for="8" value="2026-01-07 08:45:00" />
+          <attvalue for="10" value="PRESENT_OR_MENTIONED" />
+          <attvalue for="11" value="1dc36480-1654-4efd-bbdb-466761571fbf" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:pain" id="16" label="HAS_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="HAS_SYMPTOM" />
+          <attvalue for="8" value="2026-01-07 09:10:00" />
+          <attvalue for="10" value="PRESENT_OR_MENTIONED" />
+          <attvalue for="11" value="57336364-5e89-4ef2-ac72-ec1fef1c23c2" />
+          <attvalue for="9" value="1" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:pain" id="17" label="HAS_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="HAS_SYMPTOM" />
+          <attvalue for="8" value="2026-01-07 09:25:00" />
+          <attvalue for="10" value="PRESENT_OR_MENTIONED" />
+          <attvalue for="11" value="7201c67a-de62-43f3-9f27-b628686f1f4f" />
+          <attvalue for="9" value="2" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:pain" id="18" label="HAS_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="HAS_SYMPTOM" />
+          <attvalue for="8" value="2026-01-07 10:30:00" />
+          <attvalue for="10" value="PRESENT_OR_MENTIONED" />
+          <attvalue for="11" value="517c676b-9d05-4343-b32e-501911137809" />
+          <attvalue for="9" value="3" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:pain" id="19" label="ABSENT_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="ABSENT_SYMPTOM" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="NEGATED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="4" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:pain" id="20" label="HAS_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="HAS_SYMPTOM" />
+          <attvalue for="8" value="2026-01-07 13:00:00" />
+          <attvalue for="10" value="PRESENT_OR_MENTIONED" />
+          <attvalue for="11" value="aeeb1efb-3893-4746-a192-014babe7179d" />
+          <attvalue for="9" value="5" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:pain" id="21" label="HAS_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="HAS_SYMPTOM" />
+          <attvalue for="8" value="2026-01-08 09:00:00" />
+          <attvalue for="10" value="PRESENT_OR_MENTIONED" />
+          <attvalue for="11" value="dd475629-dee3-466d-8f89-b30e85747025" />
+          <attvalue for="9" value="6" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:pain" id="22" label="HAS_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="HAS_SYMPTOM" />
+          <attvalue for="8" value="2026-01-09 08:30:00" />
+          <attvalue for="10" value="PRESENT_OR_MENTIONED" />
+          <attvalue for="11" value="421245a4-ff53-4b92-84a6-dcb33e8c0e4a" />
+          <attvalue for="9" value="7" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="PROCEDURE_TEST:x-ray" id="23" label="MENTIONS_TEST">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_TEST" />
+          <attvalue for="8" value="2026-01-07 10:00:00" />
+          <attvalue for="10" value="MENTIONED" />
+          <attvalue for="11" value="87d658f4-d59d-4747-b655-2f90228ec92c" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="PROCEDURE_TEST:x-ray" id="24" label="MENTIONS_TEST">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_TEST" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="MENTIONED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="1" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:headache" id="25" label="ABSENT_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="ABSENT_SYMPTOM" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="NEGATED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:nausea" id="26" label="ABSENT_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="ABSENT_SYMPTOM" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="NEGATED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:vomiting" id="27" label="ABSENT_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="ABSENT_SYMPTOM" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="NEGATED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:dizziness" id="28" label="ABSENT_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="ABSENT_SYMPTOM" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="NEGATED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="SYMPTOM:weakness" id="29" label="ABSENT_SYMPTOM">
+        <attvalues>
+          <attvalue for="7" value="ABSENT_SYMPTOM" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="NEGATED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="MEDICATION:medication" id="30" label="MENTIONS_MEDICATION">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_MEDICATION" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="MENTIONED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="MEDICATION:medication" id="31" label="MENTIONS_MEDICATION">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_MEDICATION" />
+          <attvalue for="8" value="2026-01-08 11:15:00" />
+          <attvalue for="10" value="MENTIONED" />
+          <attvalue for="11" value="ba748d7d-fa5a-43f9-88d0-d923f650dcea" />
+          <attvalue for="9" value="1" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="PROCEDURE_TEST:blood test" id="32" label="MENTIONS_TEST">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_TEST" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="MENTIONED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="PROCEDURE_TEST:blood tests" id="33" label="MENTIONS_TEST">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_TEST" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="MENTIONED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="PROCEDURE_TEST:fbc" id="34" label="MENTIONS_TEST">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_TEST" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="MENTIONED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="BODY_PART:head" id="35" label="MENTIONS_BODY_PART">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_BODY_PART" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="MENTIONED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="BODY_PART:chest" id="36" label="MENTIONS_BODY_PART">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_BODY_PART" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="MENTIONED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="Patient:028998ee-babc-4096-9b28-001bc2f9a84e" target="BODY_PART:abdomen" id="37" label="MENTIONS_BODY_PART">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_BODY_PART" />
+          <attvalue for="8" value="2026-01-07 11:00:00" />
+          <attvalue for="10" value="MENTIONED" />
+          <attvalue for="11" value="9d66207f-c495-436e-a83e-bb3c551206a8" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:1dc36480-1654-4efd-bbdb-466761571fbf" target="SYMPTOM:pain" id="38" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:57336364-5e89-4ef2-ac72-ec1fef1c23c2" target="SYMPTOM:pain" id="39" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:7201c67a-de62-43f3-9f27-b628686f1f4f" target="SYMPTOM:pain" id="40" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:87d658f4-d59d-4747-b655-2f90228ec92c" target="PROCEDURE_TEST:x-ray" id="41" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:517c676b-9d05-4343-b32e-501911137809" target="SYMPTOM:pain" id="42" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="SYMPTOM:headache" id="43" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="SYMPTOM:pain" id="44" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="SYMPTOM:nausea" id="45" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="SYMPTOM:vomiting" id="46" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="SYMPTOM:dizziness" id="47" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="SYMPTOM:weakness" id="48" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="MEDICATION:medication" id="49" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="PROCEDURE_TEST:x-ray" id="50" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="PROCEDURE_TEST:blood test" id="51" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="PROCEDURE_TEST:blood tests" id="52" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="PROCEDURE_TEST:fbc" id="53" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="BODY_PART:head" id="54" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="BODY_PART:chest" id="55" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:9d66207f-c495-436e-a83e-bb3c551206a8" target="BODY_PART:abdomen" id="56" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:aeeb1efb-3893-4746-a192-014babe7179d" target="SYMPTOM:pain" id="57" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:dd475629-dee3-466d-8f89-b30e85747025" target="SYMPTOM:pain" id="58" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:ba748d7d-fa5a-43f9-88d0-d923f650dcea" target="MEDICATION:medication" id="59" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+      <edge source="EventNode:421245a4-ff53-4b92-84a6-dcb33e8c0e4a" target="SYMPTOM:pain" id="60" label="MENTIONS_IN_NOTE">
+        <attvalues>
+          <attvalue for="7" value="MENTIONS_IN_NOTE" />
+          <attvalue for="9" value="0" />
+        </attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>

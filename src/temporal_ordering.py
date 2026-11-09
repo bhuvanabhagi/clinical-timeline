@@ -2,9 +2,6 @@ from pathlib import Path
 import pandas as pd
 
 
-# ============================================================
-# PROJECT PATH
-# ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -16,9 +13,6 @@ NOTES_PATH = PROCESSED_DIR / "processed_clinical_notes.csv"
 OUTPUT_PATH = PROCESSED_DIR / "temporal_events.csv"
 
 
-# ============================================================
-# LOAD DATA
-# ============================================================
 
 def load_data():
 
@@ -37,9 +31,6 @@ def load_data():
     return events, notes
 
 
-# ============================================================
-# BUILD TEMPORAL ORDER
-# ============================================================
 
 def build_temporal_order():
 
