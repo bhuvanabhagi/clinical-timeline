@@ -104,21 +104,36 @@ EVENT_PATTERNS = {
 # FIND EVENT TYPE
 # ---------------------------------------------------------
 
-def detect_event_type(text):
+def detect_event_types(text):
     """
-    Identify the first matching clinical event category.
+    Detect all matching clinical event categories.
     """
 
-    text_lower = text.lower()
+    if pd.isna(text):
+        return ["Other"]
+
+    text_lower = str(text).lower()
+
+    detected_events = []
 
     for event_type, keywords in EVENT_PATTERNS.items():
 
         for keyword in keywords:
 
-            if keyword in text_lower:
-                return event_type
+            pattern = (
+                r"(?<!\w)"
+                + re.escape(keyword)
+                + r"(?!\w)"
+            )
 
-    return "Other"
+            if re.search(pattern, text_lower):
+                detected_events.append(event_type)
+                break
+
+    if not detected_events:
+        return ["Other"]
+
+    return detected_events
 
 
 # ---------------------------------------------------------
@@ -150,9 +165,15 @@ def extract_evidence(text, event_type):
 # MAIN EVENT EXTRACTION
 # ---------------------------------------------------------
 
+
 def extract_events():
 
     print("Loading processed clinical notes...")
+
+    if not INPUT_PATH.exists():
+        raise FileNotFoundError(
+            f"Input file not found: {INPUT_PATH}"
+        )
 
     notes = pd.read_csv(INPUT_PATH)
 
@@ -162,27 +183,31 @@ def extract_events():
 
     for _, row in notes.iterrows():
 
-        text = str(row["clean_note_text"])
+        text = row["clean_note_text"]
 
-        event_type = detect_event_type(text)
+        # Detect multiple event categories.
+        event_types = detect_event_types(text)
 
-        evidence = extract_evidence(
-            text,
-            event_type
-        )
+        for event_type in event_types:
 
-        event = {
-            "person_id": row["person_id"],
-            "admission_id": row["admission_id"],
-            "clinical_note_id": row["clinical_note_id"],
-            "event_date": row["creation_timestamp"],
-            "event_type": event_type,
-            "event_text": evidence,
-            "note_subject": row["note_subject"],
-            "note_type": row["note_type"],
-        }
+            evidence = extract_evidence(
+                text,
+                event_type
+            )
 
-        events.append(event)
+            event = {
+                "person_id": row["person_id"],
+                "admission_id": row["admission_id"],
+                "clinical_note_id": row["clinical_note_id"],
+                "event_date": row["creation_timestamp"],
+                "event_type": event_type,
+                "event_text": evidence,
+                "full_note_text": text,
+                "note_subject": row["note_subject"],
+                "note_type": row["note_type"],
+            }
+
+            events.append(event)
 
     events_df = pd.DataFrame(events)
 
@@ -191,25 +216,20 @@ def extract_events():
         index=False
     )
 
-    print()
+    print("\n========================================")
+    print("MULTI-CATEGORY EVENT EXTRACTION COMPLETED")
     print("========================================")
-    print("EVENT EXTRACTION COMPLETED")
-    print("========================================")
 
-    print("Total events:", len(events_df))
+    print("Original notes:", len(notes))
+    print("Extracted event categories:", len(events_df))
 
-    print()
-    print("Event type distribution:")
+    print("\nEvent type distribution:")
 
-    print(
-        events_df["event_type"]
-        .value_counts()
-    )
+    print(events_df["event_type"].value_counts())
 
-    print()
-    print("Saved to:")
-
+    print("\nSaved to:")
     print(OUTPUT_PATH)
+
 
 
 if __name__ == "__main__":

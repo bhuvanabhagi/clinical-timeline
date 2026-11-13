@@ -10,183 +10,149 @@ PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
 INPUT_PATH = PROCESSED_DIR / "clinical_triples.csv"
 
 
-def clean_value(value):
-    """Convert CSV values into safe strings."""
-    if pd.isna(value):
-        return ""
-    return str(value).strip()
-
-
 def load_triples():
     print("Loading clinical triples...")
-
     triples = pd.read_csv(INPUT_PATH)
 
-    required_columns = {
-        "subject", "predicate", "object", "event_date",
-        "event_type", "patient_id", "admission_id",
-        "clinical_note_id", "evidence", "assertion"
-    }
-
-    missing = required_columns - set(triples.columns)
-
-    if missing:
-        raise ValueError(
-            f"Missing columns in clinical_triples.csv: {sorted(missing)}"
-        )
-
-    print("Total triples loaded:", len(triples))
+    print("Total triples:", len(triples))
     return triples
 
 
-def build_knowledge_graph(person_id):
-    triples = load_triples()
+def build_patient_graph(patient_id, triples):
 
-    # Keep only this patient's records
-    patient_triples = triples[
-        triples["patient_id"].astype(str) == str(person_id)
+    patient_data = triples[
+        triples["patient_id"].astype(str) == str(patient_id)
     ].copy()
 
-    if patient_triples.empty:
-        print("No records found for this patient.")
+    if patient_data.empty:
+        print("No data found for this patient.")
         return
 
     graph = nx.MultiDiGraph()
 
-    patient_node = f"Patient:{person_id}"
+    # Add patient node
+    patient_node = f"Patient:{patient_id}"
+
     graph.add_node(
         patient_node,
-        label=f"Patient: {person_id}",
+        label="Patient",
         node_type="Patient"
     )
 
-    # Map each clinical note to its event node
-    note_to_event = {}
+    processed_notes = set()
 
-    # Pass 1: create individual event nodes
-    for index, row in patient_triples.iterrows():
-        predicate = clean_value(row["predicate"])
-        obj = clean_value(row["object"])
+    for index, row in patient_data.iterrows():
 
-        # These rows describe a clinical event
-        if predicate != "HAS_CLINICAL_EVENT":
-            continue
+        note_id = str(row["clinical_note_id"])
+        event_type = str(row["event_type"])
+        event_date = str(row["event_date"])
 
-        if not obj.startswith("Event:"):
-            continue
+        # Create a unique note/event node
+        if note_id and note_id.lower() not in ("nan", "none"):
 
-        note_id = clean_value(row["clinical_note_id"])
+            note_key = note_id
 
-        # Use note ID to distinguish events from different notes
-        event_id = (
-            f"EventNode:{note_id}"
-            if note_id
-            else f"EventNode:{index}"
+        else:
+            note_key = f"row_{index}"
+
+        event_node = f"ClinicalNote:{patient_id}:{note_key}"
+
+        event_label = (
+            f"{event_type} | {event_date}"
         )
 
-        event_type = clean_value(row["event_type"]) or "Other"
-        event_date = clean_value(row["event_date"])
-        evidence = clean_value(row["evidence"])
-        assertion = clean_value(row["assertion"])
-        admission_id = clean_value(row["admission_id"])
+        # Add each clinical note only once
+        if event_node not in processed_notes:
 
-        # Short label for displaying in Gephi
-        short_evidence = evidence.replace("\n", " ").strip()
-        if len(short_evidence) > 65:
-            short_evidence = short_evidence[:62] + "..."
+            graph.add_node(
+                event_node,
+                label=event_label,
+                node_type="Clinical Event",
+                event_type=event_type,
+                event_date=event_date,
+                clinical_note_id=note_id
+            )
 
-        label = f"{event_type} | {event_date}"
-        if short_evidence:
-            label += f" | {short_evidence}"
+            graph.add_edge(
+                patient_node,
+                event_node,
+                label="HAS_CLINICAL_EVENT",
+                relationship="HAS_CLINICAL_EVENT"
+            )
 
-        graph.add_node(
-            event_id,
-            label=label,
-            node_type="Clinical Event",
-            event_type=event_type,
-            event_date=event_date,
-            evidence=evidence,
-            assertion=assertion,
-            clinical_note_id=note_id,
-            admission_id=admission_id
-        )
+            processed_notes.add(event_node)
 
-        graph.add_edge(
-            patient_node,
-            event_id,
-            label="HAS_CLINICAL_EVENT",
-            relationship="HAS_CLINICAL_EVENT",
-            event_date=event_date
-        )
+        predicate = str(row["predicate"]).strip()
+        obj = str(row["object"]).strip()
+        evidence = str(row["evidence"])
 
-        if note_id:
-            note_to_event[note_id] = event_id
-
-    # Pass 2: add extracted clinical relationships
-    for index, row in patient_triples.iterrows():
-        subject = clean_value(row["subject"])
-        predicate = clean_value(row["predicate"])
-        obj = clean_value(row["object"])
-
-        if not subject or not predicate or not obj:
-            continue
-
+        # Skip generic event-category objects.
+        # The actual event is already represented by the note node.
         if predicate == "HAS_CLINICAL_EVENT":
             continue
 
-        if subject.lower() in {"nan", "none"}:
+        if obj.lower() in ("", "nan", "none"):
             continue
 
-        if obj.lower() in {"nan", "none"}:
-            continue
+        # Add clinical concept node
+        concept_node = f"Concept:{obj}"
 
-        # Preserve the original subject and object
-        graph.add_node(subject, label=subject)
-        graph.add_node(obj, label=obj)
-
-        graph.add_edge(
-            subject,
-            obj,
-            label=predicate,
-            relationship=predicate,
-            event_date=clean_value(row["event_date"]),
-            assertion=clean_value(row["assertion"]),
-            clinical_note_id=clean_value(row["clinical_note_id"])
+        graph.add_node(
+            concept_node,
+            label=obj,
+            node_type="Clinical Concept"
         )
 
-        # Link the event to concepts extracted from the same note.
-        # This means "mentioned in the note", not causation.
-        note_id = clean_value(row["clinical_note_id"])
+        # Connect the clinical note to the extracted concept
+        graph.add_edge(
+            event_node,
+            concept_node,
+            label=predicate,
+            relationship=predicate,
+            evidence=evidence[:500]
+        )
 
-        if note_id in note_to_event:
-            event_node = note_to_event[note_id]
-
-            graph.add_edge(
-                event_node,
-                obj,
-                label="MENTIONS_IN_NOTE",
-                relationship="MENTIONS_IN_NOTE"
-            )
-
-    # Save one graph per patient
-    patient_output = (
-        PROCESSED_DIR / f"knowledge_graph_patient_{person_id}.gexf"
+    # Save patient-specific graph
+    output_path = (
+        PROCESSED_DIR /
+        f"knowledge_graph_patient_{patient_id}.gexf"
     )
 
-    nx.write_gexf(graph, patient_output)
+    nx.write_gexf(graph, output_path)
 
     print("\n" + "=" * 45)
     print("PATIENT KNOWLEDGE GRAPH CREATED")
     print("=" * 45)
-    print("Patient ID:", person_id)
-    print("Source rows:", len(patient_triples))
+
+    print("Patient ID:", patient_id)
+    print("Clinical notes:", len(processed_notes))
     print("Total nodes:", graph.number_of_nodes())
     print("Total relationships:", graph.number_of_edges())
-    print("Saved to:", patient_output)
+    print("Saved to:", output_path)
 
 
 def main():
+
     triples = load_triples()
+
+    required_columns = [
+        "patient_id",
+        "clinical_note_id",
+        "event_type",
+        "event_date",
+        "predicate",
+        "object",
+        "evidence"
+    ]
+
+    missing = [
+        col for col in required_columns
+        if col not in triples.columns
+    ]
+
+    if missing:
+        print("Missing columns:", missing)
+        return
 
     patients = sorted(
         triples["patient_id"]
@@ -196,12 +162,13 @@ def main():
     )
 
     print("\nPATIENT KNOWLEDGE GRAPH EXPLORER")
-    print("=" * 40)
+    print("=" * 45)
 
-    for number, patient_id in enumerate(patients, start=1):
-        print(f"{number}. {patient_id}")
+    for i, patient in enumerate(patients, start=1):
+        print(f"{i}. {patient}")
 
     while True:
+
         choice = input(
             "\nEnter patient number (or Q to quit): "
         ).strip()
@@ -211,16 +178,18 @@ def main():
             break
 
         if not choice.isdigit():
-            print("Enter a valid number.")
+            print("Please enter a valid number.")
             continue
 
-        number = int(choice)
+        index = int(choice)
 
-        if number < 1 or number > len(patients):
+        if index < 1 or index > len(patients):
             print("Number out of range.")
             continue
 
-        build_knowledge_graph(patients[number - 1])
+        patient_id = patients[index - 1]
+
+        build_patient_graph(patient_id, triples)
 
 
 if __name__ == "__main__":

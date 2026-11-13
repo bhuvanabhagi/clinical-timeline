@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Clinical Timeline</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- Knowledge graph visualization library -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/vis-network/styles/vis-network.min.css"
+    >
+
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <script src="/static/script.js" defer></script>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">✚</div>
+            <div>
+                <h2>Clinical Timeline</h2>
+            </div>
+        </div>
+
+        <div class="sidebar-label">WORKSPACE</div>
+
+        <nav>
+            <a href="#overview" class="nav-link active">
+                <span>▦</span> Patient Overview
+            </a>
+
+            <a href="#timeline-section" class="nav-link">
+                <span>◷</span> Clinical Timeline
+            </a>
+
+            <a href="#graph-section" class="nav-link">
+                <span>◎</span> Knowledge Graph
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="system-status">
+                <span class="status-dot"></span>
+                Backend connection
+                <strong id="connection-status">Checking</strong>
+            </div>
+
+            <p>Clinical Timeline Intelligence</p>
+            <p class="version">Research Prototype · v1.1</p>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <p class="breadcrumb">Workspace / Patient Journey</p>
+                <h1>Patient Journey Reconstruction</h1>
+            </div>
+
+            <div class="topbar-right">
+                <span class="live-indicator"></span>
+                <span>Local research environment</span>
+            </div>
+        </header>
+
+
+        <!-- WELCOME -->
+        <section class="welcome-section" id="overview">
+
+            <div>
+                <p class="eyebrow">LONGITUDINAL CLINICAL ANALYSIS</p>
+
+                <h2>Understand the complete patient journey.</h2>
+
+                <p class="welcome-description">
+                    Reconstructing patient journeys from fragmented
+                    clinical records using temporal ordering,
+                    clinical entities and knowledge graph relationships.
+                </p>
+            </div>
+
+            <div class="welcome-decoration">✚</div>
+
+        </section>
+
+
+        <!-- PATIENT SELECTION -->
+        <section class="panel patient-panel">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">PATIENT SELECTION</p>
+                    <h2>Select a patient</h2>
+                </div>
+
+                <span class="small-tag">Dataset connected</span>
+            </div>
+
+            <div class="patient-controls">
+
+                <div class="select-wrapper">
+                    <label for="patient-select">Patient ID</label>
+
+                    <select id="patient-select">
+                        <option value="">Loading patients...</option>
+                    </select>
+                </div>
+
+                <button id="load-patient" class="primary-button">
+                    View patient journey
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <p id="patient-message" class="message"></p>
+
+        </section>
+
+
+        <!-- SUMMARY CARDS -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon blue">▤</div>
+                <div>
+                    <p>Total clinical notes</p>
+                    <h3 id="total-notes">—</h3>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple">⌂</div>
+                <div>
+                    <p>Admissions</p>
+                    <h3 id="total-admissions">—</h3>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green">◷</div>
+                <div>
+                    <p>Timeline entries</p>
+                    <h3 id="total-entries">—</h3>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- PATIENT DETAILS -->
+        <section class="panel patient-details">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">SELECTED RECORD</p>
+                    <h2>Patient information</h2>
+                </div>
+            </div>
+
+            <div class="detail-grid">
+
+                <div class="detail-item">
+                    <span>Patient identifier</span>
+                    <strong id="patient-id-display">Not selected</strong>
+                </div>
+
+                <div class="detail-item">
+                    <span>Admission identifier</span>
+                    <strong id="admission-id-display">Not available</strong>
+                </div>
+
+                <div class="detail-item">
+                    <span>Record status</span>
+                    <strong class="record-status">Available in dataset</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CLINICAL TIMELINE -->
+        <section class="timeline-section" id="timeline-section">
+
+            <div class="timeline-heading">
+
+                <div>
+                    <p class="eyebrow">CHRONOLOGICAL RECONSTRUCTION</p>
+                    <h2>Clinical journey</h2>
+
+                    <p class="section-description">
+                        Clinical events arranged using their recorded timestamps.
+                    </p>
+                </div>
+
+                <span class="timeline-count" id="timeline-count">
+                    0 notes
+                </span>
+
+            </div>
+
+            <div class="legend">
+                <span><i class="legend-dot symptom"></i> Symptoms</span>
+                <span><i class="legend-dot diagnosis"></i> Diagnoses</span>
+                <span><i class="legend-dot medication"></i> Medications</span>
+                <span><i class="legend-dot investigation"></i> Investigations</span>
+            </div>
+
+            <div id="timeline-container">
+
+                <div class="empty-state">
+                    <div class="empty-icon">◷</div>
+                    <h3>No patient selected</h3>
+                    <p>Select a patient above to view their clinical journey.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- KNOWLEDGE GRAPH -->
+        <section class="graph-section" id="graph-section">
+
+            <div class="timeline-heading">
+
+                <div>
+                    <p class="eyebrow">GRAPH-BASED CLINICAL REPRESENTATION</p>
+                    <h2>Knowledge Graph Explorer</h2>
+
+                    <p class="section-description">
+                        Explore relationships between clinical notes,
+                        symptoms, diagnoses, medications and investigations.
+                    </p>
+                </div>
+
+                <span class="graph-status" id="graph-status">
+                    Waiting for patient
+                </span>
+
+            </div>
+
+
+            <!-- GRAPH STATISTICS -->
+            <div class="graph-stats">
+
+                <div class="graph-stat">
+                    <span>Nodes</span>
+                    <strong id="graph-node-count">0</strong>
+                </div>
+
+                <div class="graph-stat">
+                    <span>Relationships</span>
+                    <strong id="graph-edge-count">0</strong>
+                </div>
+
+                <div class="graph-stat">
+                    <span>Selected patient</span>
+                    <strong id="graph-patient-label">None</strong>
+                </div>
+
+            </div>
+
+
+            <!-- GRAPH LEGEND -->
+            <div class="graph-legend">
+
+                <span><i class="graph-dot patient-dot"></i> Patient</span>
+                <span><i class="graph-dot note-dot"></i> Clinical Note</span>
+                <span><i class="graph-dot symptom-dot"></i> Symptom</span>
+                <span><i class="graph-dot diagnosis-dot"></i> Diagnosis</span>
+                <span><i class="graph-dot medication-dot"></i> Medication</span>
+                <span><i class="graph-dot investigation-dot"></i> Investigation</span>
+                <span><i class="graph-dot event-dot"></i> Other concept</span>
+
+            </div>
+
+
+            <!-- GRAPH CANVAS -->
+            <div class="graph-panel">
+
+                <div class="graph-toolbar">
+
+                    <div>
+                        <strong>Patient relationship network</strong>
+                        <p>Drag nodes · Zoom · Select a node to inspect</p>
+                    </div>
+
+                    <div class="graph-actions">
+
+                        <button id="graph-fit" class="graph-button">
+                            Fit graph
+                        </button>
+
+                        <button id="graph-reset" class="graph-button">
+                            Reset
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div id="knowledge-graph">
+
+                    <div class="graph-empty">
+                        <div>◎</div>
+                        <h3>Knowledge graph will appear here</h3>
+                        <p>Select a patient to explore their clinical relationships.</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SELECTED NODE DETAILS -->
+            <div class="graph-details">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">GRAPH INSPECTOR</p>
+                        <h2>Selected node details</h2>
+                    </div>
+                </div>
+
+                <div id="graph-node-details">
+
+                    <div class="graph-detail-empty">
+                        Click any graph node to inspect its details and evidence.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <footer class="footer">
+            Clinical Timeline Intelligence · Academic Research Prototype
+            <span>Evidence-grounded patient journey reconstruction</span>
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>
